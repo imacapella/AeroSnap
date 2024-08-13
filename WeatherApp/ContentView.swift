@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct ContentView: View {
-
     @State var isNight : Bool = false
+    @StateObject var locationManager = LocationManager()
+    let locationInfo = LocationInfo()
+    @State var cityName : String = ""
+    @State var countryName : String = ""
     
     var body: some View {
         ZStack {
@@ -26,6 +30,21 @@ struct ContentView: View {
                     WeatherDayView(dayOfWeek: "SAT", temperature: 40, WeatherIcon: "snowflake")
                 }
                 Spacer()
+                if let location = locationManager.location {
+                    Text("Latitude: \(location.latitude)")
+                    Text("Longitude: \(location.longitude)")
+                    
+                    Button("Get Location Info") {
+                        locationInfo.getCityAndCountryLocation(latitude: location.latitude, longitude: location.longitude) { city, country in
+                            self.cityName = city ?? "Unknown"
+                            self.countryName = country ?? "Unknown"
+                        }
+                    }
+                    Text("Current City: \(cityName)")
+                } else {
+                    Text("Location is not available")
+                }
+                
                 Button{isNight.toggle()}
                 label:{
                     Text("Change Day Time")
@@ -33,11 +52,14 @@ struct ContentView: View {
                         .background(Color.white)
                         .font(.system(size: 20, weight: .bold, design: .default))
                         .cornerRadius(15)
-                        
                 }
-                    
+                
             }
             
+        }
+        .onAppear(){
+            print("now checking...")
+            locationManager.checkLocalAuthorization()
         }
         
     }
@@ -45,6 +67,31 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+}
+
+struct showCoordinatesView: View{
+    @StateObject var locationManager = LocationManager()
+    @Binding var showCoordinatesBool: Bool
+    var body: some View {
+        if showCoordinatesBool{
+            VStack{
+                if let location = locationManager.location{
+                    Text("Latitude: \(location.latitude)")
+                        .frame(width: 280, height: 50)
+                        .background(Color.white)
+                        .font(.system(size: 20, weight: .bold, design: .default))
+                        .cornerRadius(15)
+                    Text("Longitude: \(location.longitude)")
+                        .frame(width: 280, height: 50)
+                        .background(Color.white)
+                        .font(.system(size: 20, weight: .bold, design: .default))
+                        .cornerRadius(15)
+                }
+            }
+        }
+        
+    }
+    
 }
 
 struct WeatherDayView: View {
@@ -88,19 +135,19 @@ struct TextCityName : View {
     }
 }
 struct MainWeatherStatusView : View {
-        var weatherIcon : String
-        var temperature : Int
-        var body: some View {
-            VStack(spacing: 8){
-                Image(systemName: weatherIcon)
-                    .renderingMode(.original)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 180, height: 180)
-                Text("\(temperature)°")
-                    .font(.system(size: 60, weight: .medium, design: .default))
-                    .foregroundColor(.white)
-            }
+    var weatherIcon : String
+    var temperature : Int
+    var body: some View {
+        VStack(spacing: 8){
+            Image(systemName: weatherIcon)
+                .renderingMode(.original)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 180, height: 180)
+            Text("\(temperature)°")
+                .font(.system(size: 60, weight: .medium, design: .default))
+                .foregroundColor(.white)
         }
     }
+}
 
