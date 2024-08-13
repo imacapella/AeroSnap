@@ -1,72 +1,20 @@
 //
-//  ContentView.swift
+//  MainViews.swift
 //  WeatherApp
 //
-//  Created by Gürkan Karadaş on 8.08.2024.
+//  Created by Gürkan Karadaş on 13.08.2024.
 //
 
 import SwiftUI
-import CoreLocation
 
-struct ContentView: View {
-    @State var isNight : Bool = false
-    @StateObject var locationManager = LocationManager()
-    let locationInfo = LocationInfo()
-    @State var cityName : String = ""
-    @State var countryName : String = ""
-    
+struct MainViews: View {
     var body: some View {
-        ZStack {
-            BackgroundColors(isNight: $isNight)
-            VStack {
-                TextCityName(cityName: "Cupertino, CA")
-                MainWeatherStatusView(weatherIcon: "cloud.sun.fill", temperature: 76)
-                Spacer()
-                HStack(spacing: 30){
-                    WeatherDayView(dayOfWeek: "TUE", temperature: 76, WeatherIcon: "cloud.sun.fill")
-                    WeatherDayView(dayOfWeek: "WED", temperature: 55, WeatherIcon: "wind")
-                    WeatherDayView(dayOfWeek: "THU", temperature: 80, WeatherIcon: "sun.max.fill")
-                    WeatherDayView(dayOfWeek: "FRI", temperature: 50, WeatherIcon: "cloud.drizzle.fill")
-                    WeatherDayView(dayOfWeek: "SAT", temperature: 40, WeatherIcon: "snowflake")
-                }
-                Spacer()
-                if let location = locationManager.location {
-                    Text("Latitude: \(location.latitude)")
-                    Text("Longitude: \(location.longitude)")
-                    
-                    Button("Get Location Info") {
-                        locationInfo.getCityAndCountryLocation(latitude: location.latitude, longitude: location.longitude) { city, country in
-                            self.cityName = city ?? "Unknown"
-                            self.countryName = country ?? "Unknown"
-                        }
-                    }
-                    Text("Current City: \(cityName)")
-                } else {
-                    Text("Location is not available")
-                }
-                
-                Button{isNight.toggle()}
-                label:{
-                    Text("Change Day Time")
-                        .frame(width: 280, height: 50)
-                        .background(Color.white)
-                        .font(.system(size: 20, weight: .bold, design: .default))
-                        .cornerRadius(15)
-                }
-                
-            }
-            
-        }
-        .onAppear(){
-            print("now checking...")
-            locationManager.checkLocalAuthorization()
-        }
-        
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    ContentView()
+    MainViews()
 }
 
 struct showCoordinatesView: View{
@@ -150,4 +98,3 @@ struct MainWeatherStatusView : View {
         }
     }
 }
-
