@@ -7,10 +7,9 @@ struct WelcomePage: View {
     @State private var proceedToApp = false
     
     var body: some View {
-        if proceedToApp == true {
-            WeathersView()}
-        else{
-            
+        if proceedToApp {
+            WeathersView()
+        } else {
             VStack {
                 Text("Welcome to")
                     .font(.title)
@@ -19,8 +18,14 @@ struct WelcomePage: View {
                     .bold()
                 
                 Button(action: {
-                    locationManager.checkLocalAuthorization()
-                    proceedToApp = true
+                    if locationManager.manager.authorizationStatus == .notDetermined || locationManager.manager.authorizationStatus == .denied{
+                        locationManager.manager.requestWhenInUseAuthorization()
+                    }
+                    else{
+                        if locationManager.manager.authorizationStatus == .authorizedAlways || locationManager.manager.authorizationStatus == .authorizedWhenInUse{
+                            proceedToApp = true
+                        }
+                    }
                 }) {
                     Text("Proceed to App")
                         .font(.headline)
@@ -31,8 +36,12 @@ struct WelcomePage: View {
                 }
                 .padding()
             }
+            .onAppear {
+                locationManager.checkLocalAuthorization()
+            }
         }
     }
+    
 }
 
 #Preview {
