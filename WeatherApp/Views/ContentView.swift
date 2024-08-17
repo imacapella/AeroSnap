@@ -9,17 +9,12 @@ import SwiftUI
 import CoreLocation
 
 struct ContentView: View {
-    @State var isNight : Bool = false
-    @StateObject var locationManager = LocationManager()
-    let locationInfo = LocationInfo()
-    
+    @StateObject var locationDataManager = LocationDataManager()
     var body: some View {
-        
-        WelcomePage(locationManager: locationManager)
-        
+        VStack {
+            WelcomePage(locationDataManager: locationDataManager)
+        }
     }
-    
-    
 }
 
 

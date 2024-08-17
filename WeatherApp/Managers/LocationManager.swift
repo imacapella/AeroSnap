@@ -1,52 +1,56 @@
-//
-//  LocationManager.swift
+//  LocationDataManager.swift
 //  WeatherApp
-//
-//  Created by Gürkan Karadaş on 12.08.2024.
+//  Created by Gürkan Karadaş on 8.08.2024.
 //
 
 import Foundation
 import CoreLocation
 
-class LocationManager : NSObject, CLLocationManagerDelegate, ObservableObject
-{
-    @Published var location : CLLocationCoordinate2D?
-    var manager = CLLocationManager()
+class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegate {
+    var locationManager = CLLocationManager()
+    @Published var authorizationStatus: CLAuthorizationStatus?
     
-    func checkLocalAuthorization(){
-        manager.delegate = self
-        manager.startUpdatingLocation()
-        
-        switch manager.authorizationStatus {
-                case .notDetermined://The user choose allow or denny your app to get the location yet
-                    manager.requestWhenInUseAuthorization()
-                    
-                case .restricted://The user cannot change this app’s status, possibly due to active restrictions such as parental controls being in place.
-                    print("Location restricted")
-                    
-                case .denied://The user dennied your app to get location or disabled the services location or the phone is in airplane mode
-                    print("Location denied")
-                    
-                case .authorizedAlways://This authorization allows you to use all location services and receive location events whether or not your app is in use.
-                    print("Location authorizedAlways")
-                    
-                case .authorizedWhenInUse://This authorization allows you to use all location services and receive location events only when your app is in use
-                    print("Location authorized when in use")
-                    location = manager.location?.coordinate
-                    
-                @unknown default:
-                    print("Location service disabled")
-                
-                }
-            }
+    override init() {
+        super.init()
+        //locationManager.delegate = self
+    }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkLocalAuthorization()
+        switch manager.authorizationStatus {
+        case .authorizedWhenInUse:  // Location services are available.
+            // Insert code here of what should happen when Location services are authorized
+            authorizationStatus = .authorizedWhenInUse
+            locationManager.requestLocation()
+            break
+            
+        case .restricted:  // Location services currently unavailable.
+            // Insert code here of what should happen when Location services are NOT authorized
+            authorizationStatus = .restricted
+            break
+            
+        case .denied:  // Location services currently unavailable.
+            // Insert code here of what should happen when Location services are NOT authorized
+            authorizationStatus = .denied
+            break
+            
+        case .notDetermined:        // Authorization not determined yet.
+            authorizationStatus = .notDetermined
+            manager.requestWhenInUseAuthorization()
+            break
+            
+        default:
+            break
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.first?.coordinate
+        // Insert code to handle location updates
     }
     
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("error: \(error.localizedDescription)")
     }
+    
+    
+}
 

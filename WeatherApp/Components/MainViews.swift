@@ -17,8 +17,8 @@ struct MainViews: View {
     MainViews()
 }
 
-struct showCoordinatesView: View{
-    @StateObject var locationManager = LocationManager()
+/*struct showCoordinatesView: View{
+    @StateObject var locationManager = LocationDataManager()
     @Binding var showCoordinatesBool: Bool
     var body: some View {
         if showCoordinatesBool{
@@ -40,7 +40,7 @@ struct showCoordinatesView: View{
         
     }
     
-}
+}*/
 
 struct WeatherDayView: View {
     var dayOfWeek : String
