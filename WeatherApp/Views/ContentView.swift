@@ -12,8 +12,27 @@ struct ContentView: View {
     @StateObject var locationDataManager = LocationDataManager()
     var body: some View {
         VStack {
-            WelcomePage()
-                .preferredColorScheme(.dark)
+            if locationDataManager.isLocationSharedSuccesfully {
+                WeathersView()
+                okayorNot()
+            }
+            else{
+                WelcomePage()
+                    .preferredColorScheme(.dark)
+                okayorNot()
+            }
+        }
+    }
+}
+
+struct okayorNot : View {
+    @StateObject var locationDataManager = LocationDataManager()
+    var body: some View {
+        if locationDataManager.isLocationSharedSuccesfully {
+            Image(systemName: "plus.app.fill")
+        }
+        else{
+            Image(systemName: "xmark.app.fill")
         }
     }
 }

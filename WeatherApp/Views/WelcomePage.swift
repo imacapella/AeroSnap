@@ -1,34 +1,31 @@
 import SwiftUI
-import CoreLocationUI
+import CoreLocation
 
 struct WelcomePage: View {
     @ObservedObject var locationDataManager: LocationDataManager = LocationDataManager()
-    @State var willNavigate : Bool = false
+    //@State var willNavigate: Bool
+    
     var body: some View {
-        if willNavigate{
-            WeathersView()
-        }
-        else{
             VStack {
                 TextWelcomeToApp()
                     .padding()
                 Spacer()
                 TextAppFeatures()
                     .padding(.bottom)
-                ShareCurrentLocationButton(willNavigate: $willNavigate)
+                ShareCurrentLocationButton()
                     .padding(.top)
                 Spacer()
-                
-            }
         }
     }
 }
 
 
-#Preview {
+
+
+/*#Preview {
     WelcomePage(willNavigate: false)
         .preferredColorScheme(.dark)
-}
+}*/
 
 
 
@@ -81,20 +78,18 @@ struct TextAppFeatures : View {
 
 struct ShareCurrentLocationButton: View {
     @ObservedObject var locationDataManager: LocationDataManager = LocationDataManager()
-    @Binding var willNavigate: Bool
+   // @Binding var willNavigate : Bool
     
     var body: some View {
         GradientButton(text: "Share Current Location", icon: "location.fill", gradientColor1: .softPurple, gradientColor2: .lightBlue, btnWidth: 250, btnHeight: 40) {
             locationDataManager.locationManager.requestWhenInUseAuthorization()
-            if locationDataManager.locationManager.authorizationStatus == .authorizedWhenInUse {
-                
+            if locationDataManager.authorizationStatus == .authorizedWhenInUse {
+                //willNavigate = true
+                print(locationDataManager.authorizationStatus ?? .notDetermined)
             }
         }
-            
-              /*GradientButton(text: "Start The App", icon: "play.fill", gradientColor1: .softPurple, gradientColor2: .lightBlue, btnWidth: 250, btnHeight: 40) {
-                    print("Go to next page")
-            }*/
-        }
+    }
 }
+
 
 
