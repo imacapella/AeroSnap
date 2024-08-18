@@ -12,7 +12,8 @@ struct ContentView: View {
     @StateObject var locationDataManager = LocationDataManager()
     var body: some View {
         VStack {
-            WelcomePage(locationDataManager: locationDataManager)
+            WelcomePage()
+                .preferredColorScheme(.dark)
         }
     }
 }

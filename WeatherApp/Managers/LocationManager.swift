@@ -9,6 +9,7 @@ import CoreLocation
 class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
     @Published var authorizationStatus: CLAuthorizationStatus?
+    @Published var isLocationSharedSuccesfully: Bool = false
     
     override init() {
         super.init()
@@ -19,6 +20,7 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
         switch manager.authorizationStatus {
         case .authorizedWhenInUse:  // Location services are available.
             // Insert code here of what should happen when Location services are authorized
+            isLocationSharedSuccesfully = true
             authorizationStatus = .authorizedWhenInUse
             locationManager.requestLocation()
             break
