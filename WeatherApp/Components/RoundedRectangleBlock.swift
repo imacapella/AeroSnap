@@ -19,35 +19,35 @@ struct RoundedRectangleBlock: View {
            // LinearGradient(colors: [.softYellow, .softOrange], startPoint: .topLeading, endPoint: .bottomTrailing)
             GeometryReader { geometry in
                 HStack {
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: 10)
                         .fill(blockColor)
-                        .opacity(0.3)
-                        .shadow(radius: 2)
+                        .opacity(0.35)
                         .frame(width: geometry.size.width * 0.9, height: 55)
                         .overlay(
-                            HStack(spacing: 15) {
+                            HStack() {
                                 // İkonun bulunduğu kare kutucuk
-                                RoundedRectangle(cornerRadius: 8)
+                                RoundedRectangle(cornerRadius: 12)
                                     .fill(Color.white)
+                                    .shadow(radius: 2)
                                     .frame(width: 40, height: 40)
                                     .overlay(
                                         Image(systemName: icon)
                                             .resizable()
-                                            .renderingMode(.original)
                                             .scaledToFit()
                                             .frame(width: 27, height: 27)
                                             .foregroundColor(.blue)
                                             .padding()
                                     )
+                                    //.padding()
                                 
                                 // Başlık ve Değer
                                 Text("\(blockTitle): \(infoText)")
                                     .font(.system(size: 18, weight: .bold))
                                     .foregroundColor(textColor)
-                                
+                                    //.padding()
                                 Spacer()
                             }
-                 //           .padding(.horizontal)
+                            .padding(.horizontal)
                         )
                 }
                 .padding(.horizontal)
@@ -57,9 +57,42 @@ struct RoundedRectangleBlock: View {
     }
 }
 
+struct CurrentWeatherInfoBlockDemo: View {
+    var body: some View{
+        
+                    HStack(spacing: 10){
+                        Image(systemName: "cloud.sun.fill")
+                            .resizable()
+                            .renderingMode(.original)
+                            .scaledToFit()
+                            .frame(width: 175, height: 175)
+                            .opacity(0.9)
+                            .padding()
+                        VStack(alignment: .leading){
+                            Text("32°")
+                                .font(.system(size: 55, weight: .semibold, design: .default))
+                                .foregroundColor(.black)
+                            Text("Cloudy")
+                                .font(.system(size: 25, weight: .semibold, design: .default))
+                                .foregroundColor(.black)
+                            
+                        }
+                    }.preferredColorScheme(.dark)
+                }
+        }
+
 
 
 #Preview {
-    RoundedRectangleBlock(blockColor: .white, icon: "location.fill", blockTitle: "Location", infoText: "32", textColor: .black)
+    ZStack{
+        LinearGradient(colors: [.white, .lightBlue, .softBlue], startPoint: .topLeading, endPoint: .bottomTrailing)
+        VStack {
+            RoundedRectangleBlock(blockColor: .white, icon: "thermometer.low", blockTitle: "Min Temp", infoText: "15", textColor: .black)
+            RoundedRectangleBlock(blockColor: .white, icon: "thermometer.high", blockTitle: "Max Temp", infoText: "15", textColor: .black)
+            CurrentWeatherInfoBlockDemo()
+
+        }
+            }.edgesIgnoringSafeArea(.all)
+    
 }
 
