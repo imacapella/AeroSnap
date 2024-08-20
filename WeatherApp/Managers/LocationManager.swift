@@ -1,8 +1,3 @@
-//  LocationDataManager.swift
-//  WeatherApp
-//  Created by Gürkan Karadaş on 8.08.2024.
-//
-
 import Foundation
 import CoreLocation
 
@@ -13,32 +8,32 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
     
     override init() {
         super.init()
-        //locationManager.delegate = self
+        locationManager.delegate = self// Delegasyonu sadece butona basıldığında ayarlayın
+    }
+    
+    func requestLocationAuthorization() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
-        case .authorizedWhenInUse:  // Location services are available.
-            // Insert code here of what should happen when Location services are authorized
-            locationManager.delegate = self
+        case .authorizedWhenInUse:  // Konum servisleri erişilebilir.
             isLocationSharedSuccesfully = true
             authorizationStatus = .authorizedWhenInUse
-            locationManager.requestLocation()
+            manager.requestLocation() // Konum talebi
             break
             
-        case .restricted:  // Location services currently unavailable.
-            // Insert code here of what should happen when Location services are NOT authorized
+        case .restricted:  // Konum servisleri mevcut değil.
             authorizationStatus = .restricted
             break
             
-        case .denied:  // Location services currently unavailable.
-            // Insert code here of what should happen when Location services are NOT authorized
+        case .denied:  // Konum servisleri mevcut değil.
             authorizationStatus = .denied
             break
             
-        case .notDetermined:        // Authorization not determined yet.
+        case .notDetermined:  // Yetki henüz belirlenmemiş.
             authorizationStatus = .notDetermined
-            manager.requestWhenInUseAuthorization()
             break
             
         default:
@@ -47,13 +42,10 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        // Insert code to handle location updates
+        // Konum güncellemeleriyle ilgili kodu buraya ekleyin
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error: \(error.localizedDescription)")
     }
-    
-    
 }
-

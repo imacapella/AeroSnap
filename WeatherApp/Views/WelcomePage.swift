@@ -2,22 +2,23 @@ import SwiftUI
 import CoreLocation
 
 struct WelcomePage: View {
-    @ObservedObject var locationDataManager: LocationDataManager = LocationDataManager()
-    //@State var willNavigate: Bool
+    @State var locationManager : LocationDataManager
+    
     
     var body: some View {
-            VStack {
-                TextWelcomeToApp()
-                    .padding()
-                Spacer()
-                TextAppFeatures()
-                    .padding(.bottom)
-                ShareCurrentLocationButton()
-                    .padding(.top)
-                Spacer()
+        VStack {
+            TextWelcomeToApp()
+                .padding()
+            Spacer()
+            TextAppFeatures()
+                .padding(.bottom)
+            ShareCurrentLocationButton(locationDataManager: locationManager)
+                .padding(.top)
+            Spacer()
         }
     }
 }
+
 
 
 
@@ -77,14 +78,13 @@ struct TextAppFeatures : View {
 }
 
 struct ShareCurrentLocationButton: View {
-    @ObservedObject var locationDataManager: LocationDataManager = LocationDataManager()
-   // @Binding var willNavigate : Bool
+    @ObservedObject var locationDataManager: LocationDataManager
     
     var body: some View {
         GradientButton(text: "Share Current Location", icon: "location.fill", gradientColor1: .softPurple, gradientColor2: .lightBlue, btnWidth: 250, btnHeight: 40) {
-            locationDataManager.locationManager.requestWhenInUseAuthorization()
+            locationDataManager.requestLocationAuthorization()
             if locationDataManager.authorizationStatus == .authorizedWhenInUse {
-                //willNavigate = true
+                // Konum izni başarılı
                 print(locationDataManager.authorizationStatus ?? .notDetermined)
             }
         }

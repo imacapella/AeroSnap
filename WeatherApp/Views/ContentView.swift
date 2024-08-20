@@ -17,7 +17,7 @@ struct ContentView: View {
                 okayorNot()
             }
             else{
-                WelcomePage()
+                WelcomePage(locationManager: LocationDataManager())
                     .preferredColorScheme(.dark)
                 okayorNot()
             }
