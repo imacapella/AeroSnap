@@ -23,10 +23,10 @@ struct WelcomePage: View {
 
 
 
-/*#Preview {
-    WelcomePage(willNavigate: false)
+#Preview {
+    WelcomePage(locationManager: LocationDataManager())
         .preferredColorScheme(.dark)
-}*/
+}
 
 
 
@@ -35,15 +35,29 @@ struct TextWelcomeToApp : View {
         VStack{
             Text("Welcome to")
                 .font(.largeTitle)
-            Text("AeroForecast")
-                .font(.system(size: 50, weight: .bold, design: .default))
-                .foregroundStyle(
-                    LinearGradient(
-                        gradient: Gradient(colors: [Color.softPurple, Color.lightBlue]),
-                        startPoint: .bottomLeading,
-                        endPoint: .topTrailing
+            ZStack {
+                Text("AeroForecast")
+                    .font(.system(size: 50, weight: .bold, design: .default))
+                    .blur(radius: 15)
+                    .shadow(color: Color.softBlue.opacity(0.8), radius: 10, x: 0, y: 0)
+                    .foregroundStyle(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.softBlue, Color.lightBlue]),
+                            startPoint: .bottomLeading,
+                            endPoint: .topTrailing
+                        )
                     )
-                )
+                Text("AeroForecast")
+                    .font(.system(size: 50, weight: .bold, design: .default))
+                    .foregroundStyle(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.softBlue, Color.lightBlue]),
+                            startPoint: .bottomLeading,
+                            endPoint: .topTrailing
+                        )
+                    )
+            }
+            
         }
     }
 }
@@ -56,7 +70,7 @@ struct TextAppFeatures : View {
                     Text("\(index).")
                         .font(.system(size: 35, weight: .bold, design: .default))
                         .foregroundStyle(
-                            LinearGradient(gradient: Gradient(colors: [.softPurple, .lightBlue])
+                            LinearGradient(gradient: Gradient(colors: [.softBlue, .lightBlue])
                                            ,startPoint: .bottomLeading, endPoint: .topTrailing))
                         .multilineTextAlignment(.leading)
                     
@@ -81,11 +95,18 @@ struct ShareCurrentLocationButton: View {
     @ObservedObject var locationDataManager: LocationDataManager
     
     var body: some View {
-        GradientButton(text: "Share Current Location", icon: "location.fill", gradientColor1: .softPurple, gradientColor2: .lightBlue, btnWidth: 250, btnHeight: 40) {
-            locationDataManager.requestLocationAuthorization()
-            if locationDataManager.authorizationStatus == .authorizedWhenInUse {
-                // Konum izni başarılı
-                print(locationDataManager.authorizationStatus ?? .notDetermined)
+        ZStack {
+            GradientButton(text: "Share Current Location", icon: "location.fill", gradientColor1: .softBlue, gradientColor2: .lightBlue, btnWidth: 250, btnHeight: 40) {
+                print("blabla")
+            }
+            .blur(radius: 5)
+            .shadow(color: Color.softBlue.opacity(0.8), radius: 10, x: 0, y: 0)
+            GradientButton(text: "Share Current Location", icon: "location.fill", gradientColor1: .softBlue, gradientColor2: .lightBlue, btnWidth: 250, btnHeight: 40) {
+                locationDataManager.requestLocationAuthorization()
+                if locationDataManager.authorizationStatus == .authorizedWhenInUse {
+                    // Konum izni başarılı
+                    print(locationDataManager.authorizationStatus ?? .notDetermined)
+                }
             }
         }
     }
