@@ -13,7 +13,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if locationDataManager.isLocationSharedSuccesfully {
-                WeathersView()
+                WeathersView(locationManager: locationDataManager)
                     .preferredColorScheme(.dark)
             }
             else{

@@ -6,3 +6,19 @@
 //
 
 import Foundation
+import CoreLocation
+
+class WeatherManager: ObservableObject {
+    private var locationManager: LocationDataManager
+    
+    init(locationManager: LocationDataManager) {
+        self.locationManager = locationManager
+        // Koordinatlar mevcutsa reverseGeocode çağır
+
+    }
+    
+    func fetchWeather() {
+       
+    }
+}
+

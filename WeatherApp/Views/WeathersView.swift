@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct WeathersView: View {
+    @State var locationManager: LocationDataManager
     var body: some View {
         ZStack{
             LinearGradient(colors: [ .softBlue, .lightBlue,], startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack(alignment: .leading){
                 Spacer()
-                CityCountryText()
+                CityCountryText(locationManager: LocationDataManager())
                     .frame(alignment: .leading)
                 CurrentWeatherInfoBlock()
                     .padding()
@@ -26,7 +27,7 @@ struct WeathersView: View {
 }
 
 #Preview {
-    WeathersView()
+    WeathersView(locationManager: LocationDataManager())
 }
 
 struct CurrentWeatherInfoBlock: View {
@@ -61,12 +62,13 @@ struct ForecastWeatherInfoBlocks : View {
 }
 
 struct CityCountryText : View {
+    @ObservedObject var locationManager: LocationDataManager
     var body: some View {
         VStack(alignment: .leading){
-            Text("Beykoz,")
+            Text("\(locationManager.district ?? "Location not found")")
                 .font(.system(size: 45, weight: .bold, design: .default))
                 .foregroundColor(.black)
-            Text("Istanbul")
+            Text("\(locationManager.city ?? "Location not found")")
                 .font(.system(size: 40, weight: .semibold, design: .default))
                 .foregroundColor(.black)
             Text(formatDate(Date()))

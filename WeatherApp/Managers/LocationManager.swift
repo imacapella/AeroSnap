@@ -1,14 +1,18 @@
 import Foundation
 import CoreLocation
 
-class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegate {
+class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
     @Published var authorizationStatus: CLAuthorizationStatus?
     @Published var isLocationSharedSuccesfully: Bool = false
+    @Published var district: String?
+    @Published var city: String?
+    @Published var coordinates: CLLocationCoordinate2D?  // Enlem ve boylamı saklamak için
+    private let geocoder = CLGeocoder()
     
     override init() {
         super.init()
-        locationManager.delegate = self// Delegasyonu sadece butona basıldığında ayarlayın
+        locationManager.delegate = self
     }
     
     func requestLocationAuthorization() {
@@ -18,21 +22,21 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
-        case .authorizedWhenInUse:  // Konum servisleri erişilebilir.
+        case .authorizedWhenInUse:
             isLocationSharedSuccesfully = true
             authorizationStatus = .authorizedWhenInUse
-            manager.requestLocation() // Konum talebi
+            manager.requestLocation()  // Konum talebi
             break
             
-        case .restricted:  // Konum servisleri mevcut değil.
+        case .restricted:
             authorizationStatus = .restricted
             break
             
-        case .denied:  // Konum servisleri mevcut değil.
+        case .denied:
             authorizationStatus = .denied
             break
             
-        case .notDetermined:  // Yetki henüz belirlenmemiş.
+        case .notDetermined:
             authorizationStatus = .notDetermined
             break
             
@@ -42,10 +46,47 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        // Konum güncellemeleriyle ilgili kodu buraya ekleyin
+        guard let location = locations.last else { return }
+        
+        // Koordinatları kaydediyoruz
+        self.coordinates = location.coordinate
+        
+        let latitude = location.coordinate.latitude
+        let longitude = location.coordinate.longitude
+        
+        print("Latitude: \(latitude), Longitude: \(longitude)")
+        
+        // Bu noktada koordinatları kullanarak gerekli işlemleri yapabilirsiniz
+        
+        reverseGeocode(latitude: latitude, longitude: longitude)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error: \(error.localizedDescription)")
     }
+    
+    func reverseGeocode(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+           let location = CLLocation(latitude: latitude, longitude: longitude)
+           
+           geocoder.reverseGeocodeLocation(location) { [weak self] placemarks, error in
+               guard let self = self else { return }
+               if let error = error {
+                   print("Reverse geocoding failed with error: \(error.localizedDescription)")
+                   return
+               }
+               
+               guard let placemark = placemarks?.first else {
+                   print("No placemark found.")
+                   return
+               }
+               
+               // Ülke, il ve ilçe bilgilerini alıyoruz.
+               self.district = placemark.locality
+               self.city = placemark.administrativeArea
+               
+               // Diğer bilgileri de inceleyebilirsiniz.
+               print("District: \(self.district ?? "Unknown")")
+               print("Province: \(self.city ?? "Unknown")")
+           }
+       }
 }
