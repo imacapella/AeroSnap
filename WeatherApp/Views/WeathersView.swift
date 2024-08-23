@@ -9,30 +9,56 @@ import SwiftUI
 
 struct WeathersView: View {
     @State var locationManager: LocationDataManager
+    @State var weather: WeatherResponse?
+    var weatherManager: WeatherManager
+    
     var body: some View {
-        ZStack{
-            LinearGradient(colors: [ .softBlue, .lightBlue,], startPoint: .topLeading, endPoint: .bottomTrailing)
-            VStack(alignment: .leading){
+        ZStack {
+            LinearGradient(colors: [.softBlue, .lightBlue], startPoint: .topLeading, endPoint: .bottomTrailing)
+            VStack(alignment: .leading) {
                 Spacer()
                 CityCountryText(locationManager: LocationDataManager())
                     .frame(alignment: .leading)
-                CurrentWeatherInfoBlock()
-                    .padding()
-                Spacer()
-                ForecastWeatherInfoBlocks()
+                
+                if let weather = weather {
+                    CurrentWeatherInfoBlock(weather: weather)
+                        .padding()
+                    Spacer()
+                    MoreWeatherInfoBlocks(weather: weather)
+                } else {
+                    Text("Loading...")
+                        .font(.system(size: 55, weight: .bold))
+                        .foregroundColor(.black)
+                }
+                
                 Spacer()
             }
-        }.edgesIgnoringSafeArea(.all)
+        }
+        .edgesIgnoringSafeArea(.all)
+        .onAppear {
+            fetchWeather()
+        }
+    }
+    
+    func fetchWeather() {
+        weatherManager.fetchWeather(latitude: locationManager.locationManager.location?.coordinate.latitude ?? 0, longitude: locationManager.locationManager.location?.coordinate.longitude ?? 0) { response in
+            DispatchQueue.main.async {
+                self.weather = response
+            }
+        }
     }
 }
 
+
 #Preview {
-    WeathersView(locationManager: LocationDataManager())
+    WeathersView(locationManager: LocationDataManager(), weatherManager: WeatherManager())
 }
 
 struct CurrentWeatherInfoBlock: View {
-    var body: some View{
-        HStack(spacing: 10){
+    var weather: WeatherResponse
+    
+    var body: some View {
+        HStack(spacing: 10) {
             Image(systemName: "cloud.sun.fill")
                 .resizable()
                 .renderingMode(.original)
@@ -40,26 +66,30 @@ struct CurrentWeatherInfoBlock: View {
                 .frame(width: 175, height: 175)
                 .opacity(0.9)
                 .padding()
-            VStack(alignment: .leading){
-                Text("32°")
+            VStack(alignment: .leading) {
+                Text("\(Int(weather.main.temp))°")
                     .font(.system(size: 55, weight: .bold, design: .default))
                     .foregroundColor(.black)
-                Text("Cloudy")
+                Text(weather.weather.first?.description.capitalized ?? "N/A")
                     .font(.system(size: 25, weight: .bold, design: .default))
                     .foregroundColor(.black)
             }
-        }.preferredColorScheme(.dark)
+        }
+        .preferredColorScheme(.dark)
     }
 }
 
-struct ForecastWeatherInfoBlocks : View {
+struct MoreWeatherInfoBlocks : View {
+    var weather: WeatherResponse
+    
     var body: some View {
-        RoundedRectangleBlock(blockColor: .white, icon: "thermometer.low", blockTitle: "Min Temp", infoText: "15", textColor: .black)
-        RoundedRectangleBlock(blockColor: .white, icon: "thermometer.high", blockTitle: "Max Temp", infoText: "34", textColor: .black)
-        RoundedRectangleBlock(blockColor: .white, icon: "wind", blockTitle: "Wind", infoText: "15 Km/H", textColor: .black)
-        RoundedRectangleBlock(blockColor: .white, icon: "humidity.fill", blockTitle: "Min Temp", infoText: "%67", textColor: .black)
+        RoundedRectangleBlock(blockColor: .white, icon: "thermometer.low", blockTitle: "Min Temp", infoText: "\(Int(weather.main.temp_min))°", textColor: .black)
+        RoundedRectangleBlock(blockColor: .white, icon: "thermometer.high", blockTitle: "Max Temp", infoText: "\(Int(weather.main.temp_max))°", textColor: .black)
+        RoundedRectangleBlock(blockColor: .white, icon: "wind", blockTitle: "Wind", infoText: "\(weather.wind.speed) Km/H", textColor: .black)
+        RoundedRectangleBlock(blockColor: .white, icon: "humidity.fill", blockTitle: "Humidity", infoText: "\(weather.main.humidity)%", textColor: .black)
     }
 }
+
 
 struct CityCountryText : View {
     @ObservedObject var locationManager: LocationDataManager
@@ -72,8 +102,8 @@ struct CityCountryText : View {
                 .font(.system(size: 40, weight: .semibold, design: .default))
                 .foregroundColor(.black)
             Text(formatDate(Date()))
-                        .font(.title3)
-                        .foregroundColor(.black)
+                .font(.title3)
+                .foregroundColor(.black)
         }.padding()
         
     }
