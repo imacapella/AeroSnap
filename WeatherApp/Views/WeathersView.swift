@@ -20,6 +20,13 @@ struct WeathersView: View {
                 CityCountryText(locationManager: LocationDataManager())
                     .frame(alignment: .leading)
                 
+                if let coordinates = locationManager.coordinates {
+                                Text("Latitude: \(coordinates.latitude)")
+                                Text("Longitude: \(coordinates.longitude)")
+                            } else {
+                                Text("Fetching location...")
+                            }
+                
                 if let weather = weather {
                     CurrentWeatherInfoBlock(weather: weather)
                         .padding()
@@ -95,10 +102,10 @@ struct CityCountryText : View {
     @ObservedObject var locationManager: LocationDataManager
     var body: some View {
         VStack(alignment: .leading){
-            Text("\(locationManager.district ?? "Location not found")")
+            Text("\(locationManager.district ?? "Unknown")")
                 .font(.system(size: 45, weight: .bold, design: .default))
                 .foregroundColor(.black)
-            Text("\(locationManager.city ?? "Location not found")")
+            Text("\(locationManager.city ?? "Unknown")")
                 .font(.system(size: 40, weight: .semibold, design: .default))
                 .foregroundColor(.black)
             Text(formatDate(Date()))

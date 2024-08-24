@@ -9,12 +9,15 @@ import SwiftUI
 import CoreLocation
 
 struct ContentView: View {
-    @StateObject var locationDataManager = LocationDataManager()
+    @StateObject var locationManager = LocationDataManager()
+    @State var latitude = 0.0
+    @State var longitude = 0.0
     var body: some View {
         VStack {
-            if locationDataManager.isLocationSharedSuccesfully {
-                WeathersView(locationManager: locationDataManager, weatherManager: WeatherManager() )
+            if locationManager.isLocationSharedSuccesfully {
+                WeathersView(locationManager: locationManager, weatherManager: WeatherManager() )
                     .preferredColorScheme(.dark)
+                    .onAppear() {}
             }
             else{
                 WelcomePage(locationManager: LocationDataManager())
