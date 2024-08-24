@@ -46,17 +46,13 @@ class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.first else { return }
+        guard let location = locations.last else { return }
         
         // Koordinatları kaydediyoruz
         self.coordinates = location.coordinate
         
         let latitude = location.coordinate.latitude
         let longitude = location.coordinate.longitude
-        
-        print("Latitude: \(latitude), Longitude: \(longitude)")
-        
-        // Bu noktada koordinatları kullanarak gerekli işlemleri yapabilirsiniz
         
         reverseGeocode(latitude: latitude, longitude: longitude)
     }
@@ -84,9 +80,6 @@ class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate
                self.district = placemark.locality
                self.city = placemark.administrativeArea
                
-               // Diğer bilgileri de inceleyebilirsiniz.
-               print("District: \(self.district ?? "Unknown")")
-               print("Province: \(self.city ?? "Unknown")")
            }
        }
 }

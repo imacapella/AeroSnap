@@ -20,22 +20,13 @@ struct WeathersView: View {
                 CityCountryText(locationManager: LocationDataManager())
                     .frame(alignment: .leading)
                 
-                if let coordinates = locationManager.coordinates {
-                                Text("Latitude: \(coordinates.latitude)")
-                                Text("Longitude: \(coordinates.longitude)")
-                            } else {
-                                Text("Fetching location...")
-                            }
-                
                 if let weather = weather {
                     CurrentWeatherInfoBlock(weather: weather)
                         .padding()
                     Spacer()
                     MoreWeatherInfoBlocks(weather: weather)
                 } else {
-                    Text("Loading...")
-                        .font(.system(size: 55, weight: .bold))
-                        .foregroundColor(.black)
+                    ProgressView()
                 }
                 
                 Spacer()
@@ -63,16 +54,23 @@ struct WeathersView: View {
 
 struct CurrentWeatherInfoBlock: View {
     var weather: WeatherResponse
+    var iconCode: String {
+            weather.weather.first?.icon ?? "default_icon" // Default icon if not available
+        }
     
     var body: some View {
         HStack(spacing: 10) {
-            Image(systemName: "cloud.sun.fill")
-                .resizable()
-                .renderingMode(.original)
-                .scaledToFit()
-                .frame(width: 175, height: 175)
-                .opacity(0.9)
-                .padding()
+            if let iconName = responseToIcon(iconCode) {
+                Image(systemName: iconName)
+                    .resizable()
+                    .renderingMode(.original)
+                    .scaledToFit()
+                    .frame(width: 175, height: 175)
+                    .opacity(0.9)
+                    .padding()
+            } else {
+                Text("Icon not found") // Hata durumunda gösterilecek bir metin.
+            }
             VStack(alignment: .leading) {
                 Text("\(Int(weather.main.temp))°")
                     .font(.system(size: 55, weight: .bold, design: .default))
@@ -83,6 +81,31 @@ struct CurrentWeatherInfoBlock: View {
             }
         }
         .preferredColorScheme(.dark)
+    }
+    
+    func responseToIcon(_ icon: String) -> String? {
+        switch icon{
+        case "01d" : return "sun.max.fill"
+        case "01n" : return "sun.min.fill"
+        case "02d" : return "cloud.sun.fill"
+        case "02n" : return "cloud.moon.fill"
+        case "03d" : return "cloud.fill"
+        case "03n" : return "cloud.fill"
+        case "04d" : return "smoke.fill"
+        case "04n" : return "smoke.fill"
+        case "09d" : return "cloud.rain.fill"
+        case "09n" : return "cloud.rain.fill"
+        case "10d" : return "cloud.sun.rain.fill"
+        case "10n" : return "cloud.sun.rain.fill"
+        case "11d" : return "cloud.bolt.fill"
+        case "11n" : return "cloud.bolt.fill"
+        case "13d" : return "snowflake"
+        case "13n" : return "snowflake"
+        case "50d" : return "cloud.fog.fill"
+        case "50n" : return "cloud.fog.fill"
+        default:
+            return "bir hata oluştu"
+        }
     }
 }
 
