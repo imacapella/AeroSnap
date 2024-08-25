@@ -46,16 +46,33 @@ class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
+        guard let location = locations.last else { return }  
+        print("locationManager: ", location)
         
-        // Koordinatları kaydediyoruz
         self.coordinates = location.coordinate
         
         let latitude = location.coordinate.latitude
         let longitude = location.coordinate.longitude
         
-        reverseGeocode(latitude: latitude, longitude: longitude)
+        self.geocoder.reverseGeocodeLocation(location) { [weak self] placemarks, error in
+            guard let self = self else { return }
+            if let error = error {
+                print("Reverse geocoding failed with error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let placemark = placemarks?.first else {
+                print("No placemark found.")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.district = placemark.locality
+                self.city = placemark.administrativeArea
+            }
+        }
     }
+
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error: \(error.localizedDescription)")
@@ -63,23 +80,8 @@ class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate
     
     func reverseGeocode(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
            let location = CLLocation(latitude: latitude, longitude: longitude)
+        print("reverseGeocode: ",location)
            
-           geocoder.reverseGeocodeLocation(location) { [weak self] placemarks, error in
-               guard let self = self else { return }
-               if let error = error {
-                   print("Reverse geocoding failed with error: \(error.localizedDescription)")
-                   return
-               }
-               
-               guard let placemark = placemarks?.first else {
-                   print("No placemark found.")
-                   return
-               }
-               
-               // Ülke, il ve ilçe bilgilerini alıyoruz.
-               self.district = placemark.locality
-               self.city = placemark.administrativeArea
-               
-           }
+           
        }
 }

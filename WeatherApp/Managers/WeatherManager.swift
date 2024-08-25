@@ -10,8 +10,9 @@ import CoreLocation
 
 
 class WeatherManager {
-    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: @escaping (WeatherResponse?) -> Void) {
-        let apiKey = "YOUR_API_KEY"
+    let apiKey = "YOUR_API_KEY"
+
+    func fetchCurrentWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: @escaping (CurrentWeatherResponse?) -> Void) {
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric") else {
             print("Invalid API URL")
             completion(nil)
@@ -28,7 +29,7 @@ class WeatherManager {
 
             do {
                 let decoder = JSONDecoder()
-                let weatherResponse = try decoder.decode(WeatherResponse.self, from: data)
+                let weatherResponse = try decoder.decode(CurrentWeatherResponse.self, from: data)
                 DispatchQueue.main.async {
                     completion(weatherResponse)
                 }

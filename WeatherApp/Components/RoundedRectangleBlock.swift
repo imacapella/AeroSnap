@@ -52,7 +52,7 @@ struct RoundedRectangleBlock: View {
                 }
                 .padding(.horizontal)
             }
-            .frame(height: 60)  // Sabit bir yükseklik ayarladık, isteğe bağlı olarak dinamik yapabilirsiniz.
+            .frame(height: 60)  
         }
     }
 }

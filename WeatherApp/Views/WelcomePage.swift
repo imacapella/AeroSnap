@@ -36,10 +36,10 @@ struct TextWelcomeToApp : View {
             Text("Welcome to")
                 .font(.largeTitle)
             ZStack {
-                Text("AeroForecast")
+                Text("WeatherApp")
                     .font(.system(size: 50, weight: .bold, design: .default))
                     .blur(radius: 15)
-                    .shadow(color: Color.softBlue.opacity(0.8), radius: 10, x: 0, y: 0)
+                    .shadow(color: Color.softBlue.opacity(0.01), radius: 10, x: 0, y: 0)
                     .foregroundStyle(
                         LinearGradient(
                             gradient: Gradient(colors: [Color.softBlue, Color.lightBlue]),
@@ -47,7 +47,7 @@ struct TextWelcomeToApp : View {
                             endPoint: .topTrailing
                         )
                     )
-                Text("AeroForecast")
+                Text("WeatherApp")
                     .font(.system(size: 50, weight: .bold, design: .default))
                     .foregroundStyle(
                         LinearGradient(
@@ -100,7 +100,7 @@ struct ShareCurrentLocationButton: View {
                 print("blabla")
             }
             .blur(radius: 5)
-            .shadow(color: Color.softBlue.opacity(0.8), radius: 10, x: 0, y: 0)
+            .shadow(color: Color.softBlue.opacity(0.01), radius: 10, x: 0, y: 0)
             GradientButton(text: "Share Current Location", icon: "location.fill", gradientColor1: .softBlue, gradientColor2: .lightBlue, btnWidth: 250, btnHeight: 40) {
                 locationDataManager.requestLocationAuthorization()
                 if locationDataManager.authorizationStatus == .authorizedWhenInUse {

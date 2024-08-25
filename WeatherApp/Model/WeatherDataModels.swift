@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeatherResponse: Codable{
+struct CurrentWeatherResponse: Codable{
     let coord: Coord
     let weather: [Weather]
     let main: Main
@@ -38,3 +38,4 @@ struct Wind: Codable{
     let speed: Double
     let deg: Double
 }
+

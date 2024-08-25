@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct WeathersView: View {
-    @State var locationManager: LocationDataManager
-    @State var weather: WeatherResponse?
+    @ObservedObject var locationManager: LocationDataManager
+    @State var weather: CurrentWeatherResponse?
     var weatherManager: WeatherManager
     
     var body: some View {
@@ -17,7 +17,7 @@ struct WeathersView: View {
             LinearGradient(colors: [.softBlue, .lightBlue], startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack(alignment: .leading) {
                 Spacer()
-                CityCountryText(locationManager: LocationDataManager())
+                CityCountryText(locationManager: locationManager)
                     .frame(alignment: .leading)
                 
                 if let weather = weather {
@@ -39,7 +39,7 @@ struct WeathersView: View {
     }
     
     func fetchWeather() {
-        weatherManager.fetchWeather(latitude: locationManager.locationManager.location?.coordinate.latitude ?? 0, longitude: locationManager.locationManager.location?.coordinate.longitude ?? 0) { response in
+        weatherManager.fetchCurrentWeather(latitude: locationManager.locationManager.location?.coordinate.latitude ?? 0, longitude: locationManager.locationManager.location?.coordinate.longitude ?? 0) { response in
             DispatchQueue.main.async {
                 self.weather = response
             }
@@ -53,9 +53,9 @@ struct WeathersView: View {
 }
 
 struct CurrentWeatherInfoBlock: View {
-    var weather: WeatherResponse
+    var weather: CurrentWeatherResponse
     var iconCode: String {
-            weather.weather.first?.icon ?? "default_icon" // Default icon if not available
+            weather.weather.first?.icon ?? "default_icon" 
         }
     
     var body: some View {
@@ -69,7 +69,7 @@ struct CurrentWeatherInfoBlock: View {
                     .opacity(0.9)
                     .padding()
             } else {
-                Text("Icon not found") // Hata durumunda gösterilecek bir metin.
+                Text("Icon not found")
             }
             VStack(alignment: .leading) {
                 Text("\(Int(weather.main.temp))°")
@@ -110,7 +110,7 @@ struct CurrentWeatherInfoBlock: View {
 }
 
 struct MoreWeatherInfoBlocks : View {
-    var weather: WeatherResponse
+    var weather: CurrentWeatherResponse
     
     var body: some View {
         RoundedRectangleBlock(blockColor: .white, icon: "thermometer.low", blockTitle: "Min Temp", infoText: "\(Int(weather.main.temp_min))°", textColor: .black)
@@ -123,24 +123,26 @@ struct MoreWeatherInfoBlocks : View {
 
 struct CityCountryText : View {
     @ObservedObject var locationManager: LocationDataManager
+    
     var body: some View {
-        VStack(alignment: .leading){
-            Text("\(locationManager.district ?? "Unknown")")
+        VStack(alignment: .leading) {
+            Text("\(locationManager.district ?? "Loading...")")
                 .font(.system(size: 45, weight: .bold, design: .default))
                 .foregroundColor(.black)
-            Text("\(locationManager.city ?? "Unknown")")
+            Text("\(locationManager.city ?? "Loading...")")
                 .font(.system(size: 40, weight: .semibold, design: .default))
                 .foregroundColor(.black)
             Text(formatDate(Date()))
                 .font(.title3)
                 .foregroundColor(.black)
         }.padding()
-        
     }
-    
     func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "E, MMM d"
         return formatter.string(from: date)
     }
 }
+    
+    
+
