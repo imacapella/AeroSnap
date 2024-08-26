@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "61AD5EE02C64E5CF00BA5F78"
-               BuildableName = "WeatherApp.app"
-               BlueprintName = "WeatherApp"
-               ReferencedContainer = "container:WeatherApp.xcodeproj">
+               BuildableName = "AeroSnap.app"
+               BlueprintName = "AeroSnap"
+               ReferencedContainer = "container:AeroSnap.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "61AD5EE02C64E5CF00BA5F78"
-            BuildableName = "WeatherApp.app"
-            BlueprintName = "WeatherApp"
-            ReferencedContainer = "container:WeatherApp.xcodeproj">
+            BuildableName = "AeroSnap.app"
+            BlueprintName = "AeroSnap"
+            ReferencedContainer = "container:AeroSnap.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <LocationScenarioReference
@@ -66,9 +66,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "61AD5EE02C64E5CF00BA5F78"
-            BuildableName = "WeatherApp.app"
-            BlueprintName = "WeatherApp"
-            ReferencedContainer = "container:WeatherApp.xcodeproj">
+            BuildableName = "AeroSnap.app"
+            BlueprintName = "AeroSnap"
+            ReferencedContainer = "container:AeroSnap.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

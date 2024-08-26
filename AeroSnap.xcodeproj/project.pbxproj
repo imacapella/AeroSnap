@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		61AD5EE12C64E5CF00BA5F78 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61AD5EE12C64E5CF00BA5F78 /* AeroSnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AeroSnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -16,7 +16,7 @@
 			membershipExceptions = (
 				"Preview Content/Contents.json",
 			);
-			target = 61AD5EE02C64E5CF00BA5F78 /* WeatherApp */;
+			target = 61AD5EE02C64E5CF00BA5F78 /* AeroSnap */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -46,7 +46,7 @@
 		61AD5EE22C64E5CF00BA5F78 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				61AD5EE12C64E5CF00BA5F78 /* WeatherApp.app */,
+				61AD5EE12C64E5CF00BA5F78 /* AeroSnap.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -54,9 +54,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		61AD5EE02C64E5CF00BA5F78 /* WeatherApp */ = {
+		61AD5EE02C64E5CF00BA5F78 /* AeroSnap */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 61AD5EEF2C64E5D000BA5F78 /* Build configuration list for PBXNativeTarget "WeatherApp" */;
+			buildConfigurationList = 61AD5EEF2C64E5D000BA5F78 /* Build configuration list for PBXNativeTarget "AeroSnap" */;
 			buildPhases = (
 				61AD5EDD2C64E5CF00BA5F78 /* Sources */,
 				61AD5EDE2C64E5CF00BA5F78 /* Frameworks */,
@@ -69,11 +69,11 @@
 			fileSystemSynchronizedGroups = (
 				61AD5EE32C64E5CF00BA5F78 /* WeatherApp */,
 			);
-			name = WeatherApp;
+			name = AeroSnap;
 			packageProductDependencies = (
 			);
 			productName = WeatherApp;
-			productReference = 61AD5EE12C64E5CF00BA5F78 /* WeatherApp.app */;
+			productReference = 61AD5EE12C64E5CF00BA5F78 /* AeroSnap.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -91,7 +91,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 61AD5EDC2C64E5CF00BA5F78 /* Build configuration list for PBXProject "WeatherApp" */;
+			buildConfigurationList = 61AD5EDC2C64E5CF00BA5F78 /* Build configuration list for PBXProject "AeroSnap" */;
 			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -104,7 +104,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				61AD5EE02C64E5CF00BA5F78 /* WeatherApp */,
+				61AD5EE02C64E5CF00BA5F78 /* AeroSnap */,
 			);
 		};
 /* End PBXProject section */
@@ -314,7 +314,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		61AD5EDC2C64E5CF00BA5F78 /* Build configuration list for PBXProject "WeatherApp" */ = {
+		61AD5EDC2C64E5CF00BA5F78 /* Build configuration list for PBXProject "AeroSnap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61AD5EED2C64E5D000BA5F78 /* Debug */,
@@ -323,7 +323,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		61AD5EEF2C64E5D000BA5F78 /* Build configuration list for PBXNativeTarget "WeatherApp" */ = {
+		61AD5EEF2C64E5D000BA5F78 /* Build configuration list for PBXNativeTarget "AeroSnap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61AD5EF02C64E5D000BA5F78 /* Debug */,

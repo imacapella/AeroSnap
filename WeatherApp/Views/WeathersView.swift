@@ -86,7 +86,7 @@ struct CurrentWeatherInfoBlock: View {
     func responseToIcon(_ icon: String) -> String? {
         switch icon{
         case "01d" : return "sun.max.fill"
-        case "01n" : return "sun.min.fill"
+        case "01n" : return "cloud.sun.fill"
         case "02d" : return "cloud.sun.fill"
         case "02n" : return "cloud.moon.fill"
         case "03d" : return "cloud.fill"

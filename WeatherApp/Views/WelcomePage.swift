@@ -36,7 +36,7 @@ struct TextWelcomeToApp : View {
             Text("Welcome to")
                 .font(.largeTitle)
             ZStack {
-                Text("WeatherApp")
+                Text("AeroSnap")
                     .font(.system(size: 50, weight: .bold, design: .default))
                     .blur(radius: 15)
                     .shadow(color: Color.softBlue.opacity(0.01), radius: 10, x: 0, y: 0)
@@ -47,7 +47,7 @@ struct TextWelcomeToApp : View {
                             endPoint: .topTrailing
                         )
                     )
-                Text("WeatherApp")
+                Text("AeroSnap")
                     .font(.system(size: 50, weight: .bold, design: .default))
                     .foregroundStyle(
                         LinearGradient(

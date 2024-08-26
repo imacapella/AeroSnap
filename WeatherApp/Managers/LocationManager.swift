@@ -4,7 +4,7 @@ import CoreLocation
 class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
     @Published var authorizationStatus: CLAuthorizationStatus?
-    @Published var isLocationSharedSuccesfully: Bool = false
+    @Published var isLocationSharedSuccesfully: Bool = true
     @Published var district: String?
     @Published var city: String?
     @Published var coordinates: CLLocationCoordinate2D?  // Enlem ve boylamı saklamak için
