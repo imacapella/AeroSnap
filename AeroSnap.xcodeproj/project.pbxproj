@@ -21,7 +21,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		61AD5EE32C64E5CF00BA5F78 /* WeatherApp */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (611510532C7A7545000F91F2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WeatherApp; sourceTree = "<group>"; };
+		61AD5EE32C64E5CF00BA5F78 /* AeroSnap */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (611510532C7A7545000F91F2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = AeroSnap; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +38,7 @@
 		61AD5ED82C64E5CF00BA5F78 = {
 			isa = PBXGroup;
 			children = (
-				61AD5EE32C64E5CF00BA5F78 /* WeatherApp */,
+				61AD5EE32C64E5CF00BA5F78 /* AeroSnap */,
 				61AD5EE22C64E5CF00BA5F78 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,7 +67,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				61AD5EE32C64E5CF00BA5F78 /* WeatherApp */,
+				61AD5EE32C64E5CF00BA5F78 /* AeroSnap */,
 			);
 			name = AeroSnap;
 			packageProductDependencies = (
@@ -256,7 +256,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"WeatherApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"AeroSnap/Preview Content\"";
 				DEVELOPMENT_TEAM = 443MW2J9VW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -287,7 +287,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"WeatherApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"AeroSnap/Preview Content\"";
 				DEVELOPMENT_TEAM = 443MW2J9VW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
